@@ -11,13 +11,18 @@ class MahasiswaController extends Controller
  *
  * @return \Illuminate\Http\Response
  */
- public function index()
- {
+ //public function index()
+ //{
  //fungsi eloquent menampilkan data menggunakan pagination
- $mahasiswa = Mahasiswa::all(); // Mengambil semua isi tabel
- $paginate = Mahasiswa::orderBy('id_mahasiswa', 'asc')->paginate(3);
- return view('mahasiswa.index', ['mahasiswa' => $mahasiswa,'paginate'=>$paginate]);
- }
+ //$mahasiswa = Mahasiswa::all(); // Mengambil semua isi tabel
+ //$paginate = Mahasiswa::orderBy('id_mahasiswa', 'asc')->paginate(3);
+ //return view('mahasiswa.index', ['mahasiswa' => $mahasiswa,'paginate'=>$paginate]);
+ //}
+ public function index()
+    {
+        $data = Mahasiswa::paginate(4);
+        return view('mahasiswa.index',compact('data'));
+    }
  public function create()
  {
  return view('mahasiswa.create');
@@ -30,7 +35,11 @@ class MahasiswaController extends Controller
  'Nama' => 'required',
  'Kelas' => 'required',
  'Jurusan' => 'required',
+ 'Email' => 'required',
+ 'Alamat' => 'required',
+ 'Tanggallahir' => 'required',
  ]);
+ 
  //fungsi eloquent untuk menambah data
  Mahasiswa::create($request->all());
  //jika data berhasil ditambahkan, akan kembali ke halaman utama
@@ -57,6 +66,9 @@ class MahasiswaController extends Controller
  'Nama' => 'required',
  'Kelas' => 'required',
  'Jurusan' => 'required',
+ 'Email' => 'required',
+ 'Alamat' => 'required',
+ 'Tanggallahir' => 'required',
  ]);
 //fungsi eloquent untuk mengupdate data inputan kita
  Mahasiswa::where('nim', $nim)
@@ -65,6 +77,9 @@ class MahasiswaController extends Controller
  'nama'=>$request->Nama,
  'kelas'=>$request->Kelas,
  'jurusan'=>$request->Jurusan,
+ 'email'=>$request->Email,
+ 'alamat'=>$request->Alamat,
+ 'tanggallahir'=>$request->Tanggallahir,
  ]);
 //jika data berhasil diupdate, akan kembali ke halaman utama
  return redirect()->route('mahasiswa.index')
@@ -77,4 +92,17 @@ class MahasiswaController extends Controller
  return redirect()->route('mahasiswa.index')
  -> with('success', 'Mahasiswa Berhasil Dihapus');
  }
+
+ public function search(Request $request){
+    // Get the search value from the request
+    $search = $request->input('search');
+    //dd($search);
+    // Search in the title and body columns from the posts table
+    $data = Mahasiswa::where('nim', 'LIKE', "%{$search}%")
+        ->orWhere('nama', 'LIKE', "%{$search}%")
+        ->paginate();
+
+    // Return the search view with the resluts compacted
+    return view('mahasiswa.search', compact('data'));
+}
 }; 
