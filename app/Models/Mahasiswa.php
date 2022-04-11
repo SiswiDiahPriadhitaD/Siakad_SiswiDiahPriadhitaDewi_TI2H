@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\Mahasiswa as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Mahasiswa;
 
 class Mahasiswa extends Model
 
 {
     use HasFactory;
     protected $table='mahasiswa'; 
-    // Eloquent akan membuat model mahasiswa menyimpan record ditabel mahasiswa
-     protected $primaryKey = 'id_mahasiswa'; 
-     // Memanggil isi DB Dengan primarykey
+    protected $primaryKey = 'Nim'; 
+    
      /**
      * The attributes that are mass assignable.
      *
@@ -23,10 +23,11 @@ class Mahasiswa extends Model
      protected $fillable = [
      'Nim',
      'Nama',
-     'Kelas',
+     'Kelas_id',
      'Jurusan',
-     'Email',
-     'Alamat',
-     'Tanggallahir',
+
      ]; 
+     public function kelas(){
+         return $this->belongsTo(Kelas::class);
+     }
     }

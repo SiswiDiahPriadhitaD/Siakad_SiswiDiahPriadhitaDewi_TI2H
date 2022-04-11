@@ -36,21 +36,15 @@
     <th>Nama</th>
     <th>Kelas</th>
     <th>Jurusan</th>
-    <th>Email</th>
-    <th>Alamat</th>
-    <th>Tanggal Lahir</th>
     <th width="280px">Action</th>
   </tr>
-  @if(!empty($data) && $data->count())
-    @foreach($data as $mhs)
+  @if(!empty($paginate) && $paginate->count())
+    @foreach($paginate as $mhs)
       <tr>
         <td>{{ $mhs->nim }}</td>
         <td>{{ $mhs->nama }}</td>
-        <td>{{ $mhs->kelas }}</td>
+        <td>{{ $mhs->kelas->nama_kelas }}</td>
         <td>{{ $mhs->jurusan }}</td>
-        <td>{{ $mhs->email }}</td>
-        <td>{{ $mhs->alamat }}</td>
-        <td>{{ $mhs->tanggallahir }}</td>
         <td>
           <form action="{{ route('mahasiswa.destroy',['mahasiswa'=>$mhs->nim]) }}" method="POST">
             <a class="btn btn-info" href="{{ route('mahasiswa.show',$mhs->nim) }}">Show</a>
@@ -69,6 +63,6 @@
   @endif
 </table>
 
-{!! $data->links() !!}
+{!! $paginate->links() !!}
 
 @endsection
