@@ -127,4 +127,3 @@ $kelas = Kelas::all();
     // Return the search view with the resluts compacted
     return view('mahasiswa.search', compact('paginate'));
 }
-}; 
