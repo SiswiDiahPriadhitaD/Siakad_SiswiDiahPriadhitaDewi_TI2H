@@ -11,16 +11,13 @@
         </div>
     </div>
 </div>
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <form action="{{ route('mahasiswa.index') }}">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search..." name="search" value="{{ request('search')}}">
-                <button class="btn btn-primary" type="submit">Search</button>
-            </div>
-        </form>
+<form class="form float-left" method="get" action="/search">
+    <div class="form-group">
+        {{-- <label for="search" class="d-block mr-2">Cari</label> --}}
+        <input type="text" name="search" class="form-control w-75 d-inline" value="{{ old('search') }}" id="search" placeholder="Kata Kunci">
+        <button type="submit" class="btn btn-primary mb-1">Cari</button>
     </div>
-</div>
+  </form>
 @if ($message = Session::get('success'))
 <div class="alert alert-success">
     <p>{{ $message }}</p>
@@ -39,6 +36,7 @@
         <th>Email</th>
         <th>Alamat</th>
         <th>Tanggal Lahir</th>
+        <th>Profile</th>
         <th width="280px">Action</th>
     </tr>
     
@@ -52,6 +50,7 @@
     <td>{{ $mhs ->email }}</td>
     <td>{{ $mhs ->alamat}}</td>
     <td>{{ $mhs ->tanggallahir }}</td>
+    <td><img style="width: 80px; height: 80px; overflow: hidden" class="rounded-circle" src="{{ asset('./storage/'. $mhs->foto) }}" alt=""></td>
     <td>
         <form action="{{ route('mahasiswa.destroy',['mahasiswa'=>$mhs->nim]) }}" method="POST">
             

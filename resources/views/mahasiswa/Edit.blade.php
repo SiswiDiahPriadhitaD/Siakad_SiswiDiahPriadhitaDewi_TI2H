@@ -13,7 +13,8 @@
                     <li>{{ $error }}</li> @endforeach
                 </ul>
             </div> @endif
-            <form method="post" action="{{ route('mahasiswa.update', $mahasiswa->nim) }}" id="myForm"> @csrf
+            <form method="post" action="{{ route('mahasiswa.update', $mahasiswa->nim) }}" enctype="multipart/form-data" id="myForm">
+                @csrf
                 @method('PUT')
                 <div class="form-group">
                     <label for="Nim">Nim</label>
@@ -49,6 +50,12 @@
                     <label for="tanggallahir">Tanggal Lahir</label>
                     <input type="tanggallahir" name="tanggallahir" class="form-control" id="tanggallahir" value="{{ $mahasiswa->tanggallahir }}" aria-describedby="tanggallahir" >
                 </div>
+            
+            <div class="form-group">
+                <label for="File">File</label>
+                <input type="file" name="userfile" class="form-control" value="{{ $mahasiswa->foto}}" id="File" ariadescribedby="File" >
+                <img style="width: 100%" src="{{ asset('./storage/'. $mahasiswa->foto) }}" alt="">
+            </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

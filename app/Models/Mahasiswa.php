@@ -28,6 +28,7 @@ class Mahasiswa extends Model //Definisi Model
         'Email',
         'Alamat',
         'tanggallahir',
+        'userfile',
     ];
     public function kelas()
     {
